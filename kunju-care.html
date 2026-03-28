@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Kunju Emergency System</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #ffd6e0, #e0c3fc);
+      font-family: "Comic Sans MS", cursive, sans-serif;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .container {
+      max-width: 320px;
+    }
+
+    h2 {
+      margin-bottom: 15px;
+    }
+
+    button {
+      background-color: #ff6f91;
+      color: white;
+      border: none;
+      padding: 12px 18px;
+      font-size: 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      margin: 5px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      transition: transform 0.1s;
+    }
+
+    button:active {
+      transform: scale(0.95);
+    }
+
+    #message {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #333;
+      min-height: 60px;
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 20px;
+      animation: float 3s linear forwards;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-200px); opacity: 0; }
+    }
+
+    .rage {
+      background-color: #ff3b3b !important;
+    }
+
+    .hug {
+      font-size: 50px;
+      animation: hug 1s ease-in-out infinite alternate;
+    }
+
+    @keyframes hug {
+      from { transform: scale(1); }
+      to { transform: scale(1.2); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>😤 Kunju’s Anti-Cramp System</h2>
+
+  <button onclick="showMessage()">Tap when cramps attack</button>
+  <br>
+  <button onclick="rageMode()">Rage Mode 😡</button>
+  <button onclick="hugMode()">Hug 🤗</button>
+
+  <div id="message"></div>
+</div>
+
+<script>
+  const messages = [
+    "Kunju, sending virtual heating pad 🫶",
+    "Hey kunju… you’re doing better than you think 💛",
+    "Emergency chocolate for kunju 🍫🚀",
+    "Kunju deserves zero stress today 🐻",
+    "Cramps are temporary, kunju is elite 👑",
+    "Oi kunju… breathe. You got this 🌸"
+  ];
+
+  function showMessage() {
+    const random = messages[Math.floor(Math.random() * messages.length)];
+    document.getElementById("message").innerText = random;
+    spawnHeart();
+
+    if (navigator.vibrate) navigator.vibrate(50);
+  }
+
+  function rageMode() {
+    const msg = document.getElementById("message");
+    msg.innerText = "ATTACK THE CRAMPS, KUNJU 😡 TAP FAST";
+
+    document.body.classList.add("rage");
+
+    let count = 0;
+    const interval = setInterval(() => {
+      spawnHeart();
+      count++;
+      if (count > 20) {
+        clearInterval(interval);
+        document.body.classList.remove("rage");
+        msg.innerText = "Cramps defeated. Kunju wins 👑";
+      }
+    }, 100);
+  }
+
+  function hugMode() {
+    const msg = document.getElementById("message");
+    msg.innerHTML = '<div class="hug">🤗</div><br>kunju… quiet mode now 💖';
+
+    for (let i = 0; i < 10; i++) {
+      setTimeout(spawnHeart, i * 200);
+    }
+
+    if (navigator.vibrate) navigator.vibrate([50, 30, 50]);
+  }
+
+  function spawnHeart() {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerText = Math.random() > 0.5 ? "🌸" : "💖";
+    heart.style.left = Math.random() * window.innerWidth + "px";
+    heart.style.bottom = "0px";
+
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 3000);
+    
+  }
+</script>
+
+</body>
+</html>
